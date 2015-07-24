@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        //var tot = [];
+        function randomPrint(i,callback){
+            var interval = Math.random() * 1000;
+            setTimeout(function(){
+                console.log(i, interval);
+                callback(interval);
+            },interval);
+
+
+        }
+
+        function getPromise(i){
+            return new Promise(function(resolve,reject){
+                randomPrint(i,resolve);
+            });
+        }
+
+        var promise1 = getPromise(1);
+        var promise2 = getPromise(2);
+        var promise3 = getPromise(3);
+        var promises = Promise.all([promise2,promise1,promise3]);
+        promises.then(function(data){
+            console.log(data);
+        });
+
+        var promise = getPromise(10);
+        promise.then(function(data){
+            console.log('printing from within the fulfilled function callback: ',data);
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        li {
+            display: inline-block;
+        }
+        img {
+            display: inline-block;
+            width: 200px;
+            padding: 0.5em;
+            margin: 1em;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            document.querySelector('input').addEventListener('change',function(){
+                var file = this.files;
+                Array.prototype.map.call(file,read);
+                function read(file){
+                    var reader = new FileReader();
+                    reader.addEventListener('loadend',function(){
+                        var src = this.result;
+                        var ul = document.getElementById('list');
+                        var li = document.createElement('li');
+                        var img = document.createElement('img');
+                        img.src = src;
+                        ul.appendChild(li);
+                        li.appendChild(img);
+
+                    });
+                    reader.readAsDataURL(file);
+                }
+
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div>
+        <input type="file" multiple>
+    </div>
+    <ul id = 'list'>
+
+    </ul>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        function randomPrint(i, callback) {
+            // console.log(i);
+            var interval = ~~(Math.random() * 1000);
+            // console.log(interval);
+            setTimeout(function () {
+                console.log(i, interval);
+                callback(interval);
+            }, interval)
+        }
+        function getPromise(i) {
+            // perform async operations
+            // ES6 promises
+            return new Promise(function (resolve, reject) {
+                // async operations
+                randomPrint(i, resolve);
+            });
+        }
+      /*  getPromise(1).then(function () {
+            console.log('promise1 done');
+            getPromise(2).then(function () {
+                console.log('promise2 done');
+                getPromise(3).then(function () {
+                    console.log('promises completed');
+                });
+            });
+        });*/
+        // run async ops or generate promises one after the other
+        var arr = [1,2,3,4,5];
+        var i = 0;
+        function runAsyncInSeries(arr) {
+            return function pp(){
+                getPromise(arr[i]).then(function(){
+                    console.log('promise' + arr[i]);
+                    if(i<arr.length-1){
+                        ++i;
+                        runAsyncInSeries(arr)();
+                    }
+                })
+            };
+
+        }
+
+        runAsyncInSeries(arr)();
+    </script>
+</head>
+<body>
+
+</body>
+</html>
